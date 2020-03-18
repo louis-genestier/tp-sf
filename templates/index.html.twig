@@ -1,0 +1,22 @@
+<body>
+    {{ form(form) }}
+    {% for message in app.flashes('error') %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for pole in poles %}
+        <h2>{{ pole.properties.nom }}</h2>
+        <h3>Adresse: {{ pole.properties.adresses[0].lignes[0] }}, {{ pole.properties.adresses[0].codePostal }} {{ pole.properties.adresses[0].commune }}</h3>
+        <div>
+                {% for horaire in pole.properties.horaires %}
+                        {% if horaire.du == horaire.au %}
+                                <p>{{ horaire.du }}</p>
+                        {% else %}
+                                <p>{{ horaire.du }} au {{ horaire.au }}</p>
+                        {% endif %}
+                        <p>{{ horaire.heures[0].de }} à {{ horaire.heures[0].a }}</p>
+                {% endfor %}
+        </div>
+    {% endfor %}
+</body>
