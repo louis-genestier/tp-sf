@@ -23,10 +23,12 @@ class IndexController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $geoApi = new GeoApi($data['city'], $data['zip']);
-            $cityCode = $geoApi->getCityCode();
-            if (!is_null($cityCode)) {
+            try {
+                $cityCode = $geoApi->getCityCode();
                 $etablissementPublicApi = new EtablissementPublicApi($cityCode);
                 $poles = $etablissementPublicApi->getEtablissements();
+            } catch (\Exception $e) {
+                $this->addFlash('error', $e->getMessage());
             }
         }
 
