@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class GeoApi
 {
@@ -32,7 +31,7 @@ class GeoApi
                 return $data['code'];
             }
             return null;
-        } catch (TransportExceptionInterface $e) {
+        } catch (\Exception $e) {
             return null;
         }
 

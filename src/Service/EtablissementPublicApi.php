@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class EtablissementPublicApi
 {
@@ -27,7 +26,7 @@ class EtablissementPublicApi
             \curl_close($ch);
             $data = \json_decode($response, true)['features'];
             return $data;
-        } catch (TransportExceptionInterface $e) {
+        } catch (\Exception $e) {
             dump($e->getMessage());
         }
     }
