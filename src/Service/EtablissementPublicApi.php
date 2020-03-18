@@ -8,15 +8,17 @@ class EtablissementPublicApi
 {
 
     private $code;
+    private $infra;
 
-    public function __construct(String $code)
+    public function __construct(String $code, String $infra)
     {
         $this->code = $code;
+        $this->infra = $infra;
     }
 
     public function getEtablissements()
     {
-        $url = "https://etablissements-publics.api.gouv.fr/v3/communes/$this->code/pole_emploi";
+        $url = "https://etablissements-publics.api.gouv.fr/v3/communes/$this->code/$this->infra";
 
         try {
             $ch = \curl_init();

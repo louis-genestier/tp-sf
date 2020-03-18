@@ -25,7 +25,7 @@ class IndexController extends AbstractController
             $geoApi = new GeoApi($data['city'], $data['zip']);
             try {
                 $cityCode = $geoApi->getCityCode();
-                $etablissementPublicApi = new EtablissementPublicApi($cityCode);
+                $etablissementPublicApi = new EtablissementPublicApi($cityCode, $data['infra']);
                 $poles = $etablissementPublicApi->getEtablissements();
             } catch (\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
