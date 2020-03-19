@@ -3,8 +3,6 @@
 
 namespace App\Service;
 
-
-use mysql_xdevapi\Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GeoApi

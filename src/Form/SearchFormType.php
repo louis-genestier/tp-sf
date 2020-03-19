@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class SearchFormType extends AbstractType
 {
@@ -16,9 +17,29 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', TextType::class)
-            ->add('zip', NumberType::class)
+            ->add('city', TextType::class, [
+                'required' => true,
+                'label' => 'Ville',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[[:alpha:]]([-\' ]?[[:alpha:]])*$/',
+                        'message' => 'Le nom de la ville ne peut pas contenir de chiffre ou de caractères spéciaux',
+                    ])
+                ],
+            ])
+            ->add('zip', NumberType::class, [
+                'required' => true,
+                'label' => 'Code Postal',
+                'invalid_message' => 'Le format du code postal n\'est pas correct',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{5}$/',
+                        'message' => 'Le format du code postal n\'est pas correct',
+                    ]),
+                ]
+            ])
             ->add('infra', ChoiceType::class, [
+                'label' => 'Type de structure',
                 'choices' => [
                     'Plateforme d\'accompagnement et de répit pour les aidants de personnes âgées' => 'accompagnement_personnes_agees',
                     'Information sur le logement (agenceAgence départementale pour l’information sur le logement (ADIL) départementale, Adil)' => 'adil',
